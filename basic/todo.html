@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Todo 範例製作</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="images/favicon.ico" rel="shortcut icon">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/stylesheets/all.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+    integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous">
+  </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/regular.js"
+    integrity="sha384-t7yHmUlwFrLxHXNLstawVRBMeSLcXTbQ5hsd0ifzwGtN7ZF7RZ8ppM7Ldinuoiif" crossorigin="anonymous">
+  </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
+    integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous">
+  </script>
+  <script src="/javascripts/vendor.js"></script>
+
+</head>
+
+<body class="bg-lighter">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">Vue.js 練習手冊</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/basic/dev.html">基礎教學</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/template/basic.html">模板指令</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/components/basic.html">組件</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/api/vue_set.html">常用 API</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/es6/let_const.html">ES6</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+  <div class="container my-5">
+    <div class="row">
+
+      <div class="col-md-3">
+
+        <div>
+          <h6 class="text-capitalize text-muted">basic</h6>
+
+
+          <a href="/basic/dev.html" class="btn btn-block btn-link">
+            Vue 的開發環境
+          </a>
+
+
+
+          <a href="/basic/instant.html" class="btn btn-block btn-link">
+            建立 Vue 的應用程式
+          </a>
+
+
+
+          <a href="/basic/mvvm.html" class="btn btn-block btn-link">
+            MVVM 是什麼樣的概念
+          </a>
+
+
+
+          <a href="/basic/directive.html" class="btn btn-block btn-link">
+            指令
+          </a>
+
+
+
+          <a href="/basic/if_for.html" class="btn btn-block btn-link">
+            模板語法的延伸 v-if 及 v-for
+          </a>
+
+
+
+          <a href="/basic/v_on.html" class="btn btn-block btn-link">
+            處理互動式行為 v-on 指令
+          </a>
+
+
+
+          <a href="/basic/defined_var.html" class="btn btn-block btn-link">
+            預先定義資料結構
+          </a>
+
+
+
+          <a href="/basic/modifiers.html" class="btn btn-block btn-link">
+            修飾符 與 縮寫
+          </a>
+
+
+
+          <a href="/basic/v_class.html" class="btn btn-block btn-link">
+            切換 Class
+          </a>
+
+
+
+          <a href="/basic/computed.html" class="btn btn-block btn-link">
+            計算屬性
+          </a>
+
+
+
+          <a href="/basic/form.html" class="btn btn-block btn-link">
+            表單雙向綁定
+          </a>
+
+
+
+          <a href="/basic/components.html" class="btn btn-block btn-link">
+            元件化
+          </a>
+
+
+
+          <a href="/basic/todo.html" class="btn btn-block btn-primary active">
+            Todo 範例練習
+          </a>
+
+
+
+          <a href="/basic/v_lifecycle.html" class="btn btn-block btn-link">
+            延伸介紹 - Vue 生命週期
+          </a>
+
+
+        </div>
+      </div>
+
+      <div class="col-md-9 post">
+        <!-- 練習開始 -->
+        <h1 class="mt-0 text-muted">Todo 範例製作</h1>
+
+        <div class="alert alert-secondary">
+          <ol class="mb-0">
+            <li>請跟隨課程完成此章節。</li>
+          </ol>
+        </div>
+
+
+        <div id="app">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">待辦事項</span>
+            </div>
+            <input type="text" class="form-control" placeholder="準備要做的任務" v-model="newTodo" v-on:keyup.enter="addTodo">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" v-on:click="addTodo">新增</button>
+            </div>
+          </div>
+          <div class="card text-center">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a class="nav-link" v-bind:class="{ 'active' : page == 'all'}" href="#"
+                    v-on:click.prevent="page = 'all'">全部</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" v-bind:class="{ 'active' : page == 'doing'}" href="#"
+                    v-on:click.prevent="page = 'doing'">進行中</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" v-bind:class="{ 'active' : page == 'done'}" href="#"
+                    v-on:click.prevent="page = 'done'">已完成</a>
+                </li>
+              </ul>
+            </div>
+            <ul class="list-group list-group-flush text-left">
+              <li class="list-group-item" v-for="item in filterTodos" v-on:dblclick="editTodo(item)">
+                <div class="d-flex" v-if="item.id !== catchTodo.id">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" v-bind:id="item.id" v-model="item.completed">
+                    <label class="form-check-label" v-bind:for="item.id" v-bind:class="{ completed : item.completed }">
+                      {{item.title}}
+                    </label>
+                  </div>
+                  <button type="button" class="close ml-auto" aria-label="Close" v-on:click="removeTodo(item)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <input type="text" class="form-control" v-if="item.id===catchTodo.id" v-model="editTitle"
+                  v-on:keyup.esc="cancelEdit" v-on:keyup.enter="doneEdit(item)">
+              </li>
+            </ul>
+            <div class="card-footer d-flex justify-content-between">
+              <span>還有 {{ doingCount }} 筆任務未完成</span>
+              <a href="#" v-on:click.prevent="removeAll">清除所有任務</a>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          var app = new Vue({
+            el: '#app',
+            data: {
+              newTodo: '',
+              todos: [{
+                id: '1',
+                title: '我是測試內容',
+                completed: false
+              }, {
+                id: '2',
+                title: '我是測試內容222',
+                completed: false
+              }, {
+                id: '3',
+                title: '我是測試內容333',
+                completed: false
+              }],
+              page: 'all',
+              catchTodo: {},
+              editTitle: ''
+            },
+            methods: {
+              addTodo() {
+                if (!this.newTodo.trim()) {
+                  return false
+                }
+                this.todos.push({
+                  id: this.todos.length + 1,
+                  title: this.newTodo,
+                  completed: false
+                })
+                this.newTodo = ''
+              },
+              // 當你在其他頁籤刪除事項時 其實刪掉的索引位子是以所有事項為準的 
+              // 所以假設你是用索引位子刪除 你刪除的數據就不是你原先想要刪的那條了
+              // 為了防止這個問題我們要先判斷代辦事項的 id 
+              // 再通過 forEach 下去取得該數據的索引位子刪除該數據
+              removeTodo(todo) {
+                var newIndex = this.todos.findIndex(function (item, index) {
+                  return item.id === todo.id
+                })
+                this.todos.splice(newIndex, 1)
+              },
+              removeAll() {
+                this.todos = []
+              },
+              editTodo(item) {
+                this.catchTodo = item
+                this.editTitle = item.title
+              },
+              cancelEdit() {
+                this.catchTodo = {}
+              },
+              doneEdit(item) {
+                item.title = this.editTitle
+                this.editTitle = ''
+                this.catchTodo = {}
+              }
+            },
+            computed: {
+              filterTodos: function () {
+                if (this.page == 'all') {
+                  return this.todos
+                } else if (this.page == 'doing') {
+                  var filterTodo = []
+                  this.todos.forEach(function (item) {
+                    if (item.completed == false) {
+                      filterTodo.push(item)
+                    }
+                  })
+                  return filterTodo
+                } else {
+                  var filterTodo = []
+                  this.todos.forEach(function (item) {
+                    if (item.completed == true) {
+                      filterTodo.push(item)
+                    }
+                  })
+                  return filterTodo
+                }
+              },
+              doingCount: function () {
+                var doing = []
+                this.todos.forEach(function (item) {
+                  if (item.completed == false) {
+                    doing.push(item)
+                  }
+                })
+                return doing.length
+              }
+            }
+          });
+
+        </script>
+
+        <style>
+          .completed {
+            text-decoration: line-through
+          }
+
+        </style>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
